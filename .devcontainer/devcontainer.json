@@ -17,6 +17,7 @@
             "upgradePackages": "true"
         },
         "ghcr.io/devcontainers/features/github-cli:1": {},
+        "ghcr.io/devcontainers/features/git-lfs:1": {},
         "ghcr.io/devcontainers-contrib/features/pdm:2": { "version": "2.9.3" },
         "ghcr.io/devcontainers-contrib/features/pre-commit:2": {}
     },
