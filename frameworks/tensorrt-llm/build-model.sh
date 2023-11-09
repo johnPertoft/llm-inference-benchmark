@@ -5,6 +5,8 @@
 # TODO: Mount in the input model directory
 # TODO: Mount in the output model directory
 # TODO: How to get the corresponding path on the host from within the dev container?
+# TODO: Make sure the output trt engines are output to a mounted volume
+# TODO: Run as non-root user, and use correct user id and group id
 
 docker run --rm -it \
     --ipc=host \
