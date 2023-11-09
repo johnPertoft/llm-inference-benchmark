@@ -1,0 +1,14 @@
+{
+    "name": "llm-inference-benchmark",
+    "image": "ubuntu:22.04",
+    "runArgs": [
+        "--gpus=all",
+        "--ipc=host"
+    ],
+    "containerEnv": { "HUGGINGFACE_HUB_CACHE": "${containerWorkspaceFolder}/.huggingface_cache/hub" },
+    "features": {
+        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+        "ghcr.io/devcontainers-contrib/features/pdm:2": { "version": "2.9.3" },
+        "ghcr.io/devcontainers-contrib/features/pre-commit:2": {}
+    }
+}
