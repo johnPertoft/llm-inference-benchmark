@@ -1,6 +1,6 @@
 {
     "name": "llm-inference-benchmark",
-    "image": "ubuntu:22.04",
+    "image": "python:3.11",
     "runArgs": [
         "--gpus=all",
         "--ipc=host"
