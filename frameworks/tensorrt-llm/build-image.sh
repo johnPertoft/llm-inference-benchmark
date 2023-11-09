@@ -15,3 +15,5 @@ make -C docker release_build CUDA_ARCHS="80-real"
 
 
 # TODO: Tag with cuda arch maybe?
+
+# TODO: Run model build commands inside container
