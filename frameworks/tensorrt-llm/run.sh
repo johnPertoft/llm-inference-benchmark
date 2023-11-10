@@ -10,9 +10,13 @@ docker run -it --rm \
     --volume /home/john/llm-inference-benchmark/models:/models \
     --volume /home/john/llm-inference-benchmark/frameworks/tensorrt-llm/engines:/engines \
     tensorrt-llm-server \
-    python tensorrt_llm/examples/llama/summarize.py \
-        --test_trt_llm \
-        --hf_model_location /models/llama-2-7b-chat-hf/ \
-        --data_type fp16 \
+    python tensorrt_llm/examples/llama/run.py \
         --engine_dir /engines/fp16/1-gpu/ \
-        --test_hf
+        --tokenizer_dir /models/llama-2-7b-chat-hf/ \
+        --max_output_len 1024
+    # python tensorrt_llm/examples/llama/summarize.py \
+    #     --test_trt_llm \
+    #     --hf_model_location /models/llama-2-7b-chat-hf/ \
+    #     --data_type fp16 \
+    #     --engine_dir /engines/fp16/1-gpu/ \
+    #     --test_hf
