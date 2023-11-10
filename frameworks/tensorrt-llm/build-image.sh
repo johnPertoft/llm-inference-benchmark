@@ -3,6 +3,7 @@
 # TODO: Make sure we're running it from this directory.
 # TODO: Take argument for gpu architecture to build for.
 # TODO: Tag with cuda arch maybe?
+# TODO: Use tensorrt-llm release tag
 
 # Make sure we're in the right directory.
 cd "$(dirname $0)"
