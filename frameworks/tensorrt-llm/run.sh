@@ -11,11 +11,10 @@ docker run -it --rm \
     --volume /home/john/llm-inference-benchmark/frameworks/tensorrt-llm/engines:/engines \
     tensorrt-llm-server \
     python benchmarks/python/benchmark.py \
-        -m llama_13b \
+        -m llama_7b \
         --mode plugin \
-        --batch_size "64" \
-        --input_output_len "256,128" \
-        --warm_up 10
+        --batch_size "96" \
+        --input_output_len "256,128"
     # python tensorrt_llm/examples/llama/run.py \
     #     --engine_dir /engines/fp16/1-gpu/ \
     #     --tokenizer_dir /models/llama-2-7b-chat-hf/ \
