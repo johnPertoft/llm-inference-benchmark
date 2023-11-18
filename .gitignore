@@ -1,5 +1,5 @@
 .huggingface_cache
-models
+hf-models
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
