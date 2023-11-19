@@ -17,6 +17,8 @@ TODO
 - [] All services should accept batches?
 - [] Use proper prompting format for models
 - [] Code from tensorrt-llm wants to load llamatokenizer in legacy mode. Consequences?
+- [] Pin all versions
+- [] Where does FasterTransformers position itself here really?
 
 ### Triton + TensorrtLLM
 - [] Try with and without inflight batching?
