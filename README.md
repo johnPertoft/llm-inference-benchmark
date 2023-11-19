@@ -24,6 +24,7 @@ TODO
 - [ ] Compare with llama.cpp etc too
 - [ ] Enable input params to control generation for all setups
 - [ ] Can we get some metrics for how full the batches are?
+- [ ] And to what extent / whether continuous batching is used
 - [ ] Do we need to configure this somewhere?
 - [ ] How to increase gpu utilization? Even with a lot of concurrent users it doesn't go to 100%
       Bad configuration?
