@@ -20,6 +20,14 @@ TODO
 - [ ] Pin all versions
 - [ ] Where does FasterTransformers position itself here really?
 
+### Fastapi + TensorrtLLM
+- [ ] TODO
+- [ ] Quantization options?
+
+### Fastapi + vllm
+- [ ] Support batch inputs?
+- [ ] Quantization options?
+
 ### Triton + TensorrtLLM
 - [ ] Try with and without inflight batching?
 - [ ] Try different quantization configs
@@ -27,12 +35,9 @@ TODO
 - [ ] Compare prebuilt image vs building our own (at least by building our own we can reduce build time)
 - [ ] Change the tokenizer to not include special tokens maybe? (Need to change the tokenizer triton model)
 
-### Triton + Vllm
+### Triton + vllm
 - [ ] Try with and without inflight batching?
 - [ ] Is quantization supported?
-
-### Vllm
-- [ ] Just plain fastapi + Vllm
 
 ### Text Generation Inference
 - [x] Don't even have to build the image ourselves :sunglasses:
