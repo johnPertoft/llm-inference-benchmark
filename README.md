@@ -5,6 +5,23 @@ Comparing inference frameworks for LLMs
 TODO: single gpu only setups?
 
 ## TODO
-- docker pull from nvcr registry doesn't work, unauthorized, when running inside the devcontainer
-  - some docker login issue?
-  - why does it work outside? gcp instances whitelisted?
+
+### Misc
+- [] Proper instructions
+- [] Remove devcontainer config, not needed and just adds complexity
+
+### Triton + TensorrtLLM
+- [] Try with and without inflight batching?
+- [] Try different quantization configs
+- [] Improve build model/engine script to be more automatic. Write the config.pbtxt files too.
+- [] Compare prebuilt image vs building our own (at least by building our own we can reduce build time)
+
+### Triton + Vllm
+- [] Try with and without inflight batching?
+- [] Is quantization supported?
+
+### Vllm
+- [] Just plain fastapi + Vllm
+
+### Text Generation Inference
+- [] TODO
