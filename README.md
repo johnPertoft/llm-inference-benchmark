@@ -19,6 +19,7 @@ TODO
 - [ ] Code from tensorrt-llm wants to load llamatokenizer in legacy mode. Consequences?
 - [ ] Pin all versions
 - [ ] Where does FasterTransformers position itself here really?
+- [ ] Need to make sure we generate the same number of tokens for proper comparison
 
 ### Fastapi + TensorrtLLM
 - [ ] TODO
@@ -42,3 +43,4 @@ TODO
 ### Text Generation Inference
 - [x] Don't even have to build the image ourselves :sunglasses:
 - [ ] Try quantization options
+- [ ] Continuous/in-flight batching
