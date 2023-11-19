@@ -2,7 +2,7 @@
 Comparing inference frameworks for LLMs
 
 ## Delimitations
-TODO: single gpu only setups?
+Initially focusing on comparing performance for a 7B Llama2 model on a single a100 40gb.
 
 ## Usage
 TODO
@@ -20,6 +20,13 @@ TODO
 - [ ] Pin all versions
 - [ ] Where does FasterTransformers position itself here really?
 - [ ] Need to make sure we generate the same number of tokens for proper comparison
+- [ ] Check options for available metrics etc
+- [ ] Compare with llama.cpp etc too
+- [ ] Enable input params to control generation for all setups
+- [ ] Can we get some metrics for how full the batches are?
+- [ ] Do we need to configure this somewhere?
+- [ ] How to increase gpu utilization? Even with a lot of concurrent users it doesn't go to 100%
+      Bad configuration?
 
 ### Fastapi + TensorrtLLM
 - [ ] TODO
@@ -28,6 +35,7 @@ TODO
 ### Fastapi + vllm
 - [ ] Support batch inputs?
 - [ ] Quantization options?
+- [ ] Start the vllm server separately and send requests to it instead of using AsyncEngine? Any difference?
 
 ### Triton + TensorrtLLM
 - [ ] Try with and without inflight batching?

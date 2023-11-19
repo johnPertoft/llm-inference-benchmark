@@ -4,7 +4,7 @@ set -e
 cd "$(dirname $0)"
 docker run -it --rm \
     --gpus all \
-    --shm-size 1g \
+    --shm-size 2g \
     -p 8000:80 \
     --volume ${PWD}/../../hf-models:/hf-models \
     --volume ${PWD}/data \
