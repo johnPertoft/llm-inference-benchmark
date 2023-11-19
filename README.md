@@ -35,4 +35,5 @@ TODO
 - [] Just plain fastapi + Vllm
 
 ### Text Generation Inference
-- [] TODO
+- [x] Don't even have to build the image ourselves :sunglasses:
+- [] Try quantization options
