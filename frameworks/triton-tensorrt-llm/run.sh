@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 set -e
 
-# TODO:
-# - Take argument for this model to run.
+# Note that this path should be given relative to the container.
+if [ "$#" -lt 1 ]; then
+    echo "Usage: $0 <TRITON_MODEL_PATH>"
+    exit 1
+fi
+TRITON_TRT_MODEL="$1"
 
 cd "$(dirname $0)"
 docker run --rm -it \
@@ -16,10 +20,10 @@ docker run --rm -it \
     --volume ${PWD}/models:/models \
     triton-tensorrt-llm-server \
     mpirun --allow-run-as-root -n 1 /opt/tritonserver/bin/tritonserver \
-        --model-repository=/models \
+        --model-repository=${TRITON_TRT_MODEL} \
         --disable-auto-complete-config \
         --backend-config=python,shm-region-prefix-name=prefix0_ \
         :
 
-# NOTE: Run command is adapted from what tensorrtllm_backend/scripts/launch_triton_server.py
-# produces.
+# NOTE: The above run command is adapted from what tensorrtllm_backend/scripts/launch_triton_server.py
+# produces. We're not using that directly though because it launches in a subshell.

@@ -1,28 +1,37 @@
 #!/usr/bin/env bash
 set -e
 
-# NOTE: This should just be called inside the container.
+# NOTE: This is intended to be called inside the container.
 
-# TODO:
-# - Should be more general for any model.
-# - Should take arguments for engine building and output directory
+if [ "$#" -lt 2 ]; then
+    echo "Usage: $0 <HF_MODEL_PATH> <TRITON_OUTPUT_PATH> [additional arguments passed along...]"
+    exit 1
+fi
+HF_MODEL_PATH="$1"
+TRITON_OUTPUT_PATH="$2"
+shift 2
 
-HF_MODEL_PATH="/hf-models/llama-2-7b-chat-hf"
-ENGINE_OUTPUT_PATH="/models/tensorrt_llm/1"
+TRT_MODEL_PATH="${TRITON_OUTPUT_PATH}/tensorrt_llm"
+TRT_ENGINE_PATH="${TRT_MODEL_PATH}/1"
+PREPROCESSING_MODEL_PATH="${TRITON_OUTPUT_PATH}/preprocessing"
+POSTPROCESSING_MODEL_PATH="${TRITON_OUTPUT_PATH}/postprocessing"
+
+# TODO: Copy the tokenizer maybe so we can rely on only the TRITON_OUTPUT_PATH
 
 # Start from the inflight batcher example.
-cp -r tensorrtllm_backend/all_models/inflight_batcher_llm/* /models
+mkdir -p ${TRITON_OUTPUT_PATH}
+cp -r tensorrtllm_backend/all_models/inflight_batcher_llm/* ${TRITON_OUTPUT_PATH}
 
 # Substitute values with our own ones for TensorRT engine.
-python tensorrtllm_backend/tools/fill_template.py --in_place /models/tensorrt_llm/config.pbtxt \
-    decoupled_mode:true,engine_dir:${ENGINE_OUTPUT_PATH}
+python tensorrtllm_backend/tools/fill_template.py --in_place ${TRT_MODEL_PATH}/config.pbtxt \
+    decoupled_mode:true,engine_dir:${TRT_ENGINE_PATH}
 
 # Substitute values with our own ones for preprocessing.
-python tensorrtllm_backend/tools/fill_template.py --in_place /models/preprocessing/config.pbtxt \
+python tensorrtllm_backend/tools/fill_template.py --in_place ${PREPROCESSING_MODEL_PATH}/config.pbtxt \
     tokenizer_type:llama,tokenizer_dir:${HF_MODEL_PATH}
 
 # Substitute values with our own ones for postprocessing.
-python tensorrtllm_backend/tools/fill_template.py --in_place /models/postprocessing/config.pbtxt \
+python tensorrtllm_backend/tools/fill_template.py --in_place ${POSTPROCESSING_MODEL_PATH}/config.pbtxt \
     tokenizer_type:llama,tokenizer_dir:${HF_MODEL_PATH}
 
 # TODO: Some more config settings to try:
@@ -36,14 +45,8 @@ python tensorrtllm_backend/tools/fill_template.py --in_place /models/postprocess
 # Convert weights from HF Tranformers to FT format
 #python3 hf_gpt_convert.py -p 8 -i gpt2 -o ./c-model/gpt2 --tensor-parallelism 4 --storage-type float16
 
-# Build TensorRT engine.
+# Build TensorRT engine with the passed along arguments.
 python tensorrtllm_backend/tensorrt_llm/examples/llama/build.py \
     --model_dir ${HF_MODEL_PATH} \
-    --dtype float16 \
-    --remove_input_padding \
-    --use_gpt_attention_plugin float16 \
-    --enable_context_fmha \
-    --use_gemm_plugin float16 \
-    --paged_kv_cache \
-    --use_inflight_batching \
-    --output_dir ${ENGINE_OUTPUT_PATH}
+    --output_dir ${TRT_ENGINE_PATH} \
+    "$@"
