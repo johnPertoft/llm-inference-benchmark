@@ -67,10 +67,11 @@ if runtime_rank == 0:
 
 app = FastAPI(title="tensorrt")
 
+
 @app.post("/generate", response_model=GenerationResponse)
 async def generate(request: GenerationRequest) -> GenerationResponse:
     # TODO: Update this
-    #results_generator = engine.generate(request.input, sampling_params, random_uuid())
+    # results_generator = engine.generate(request.input, sampling_params, random_uuid())
 
     return GenerationResponse(output=out_text)
 
@@ -107,10 +108,22 @@ def trt_generate(input: str) -> str:
     if streaming:
         for output_ids in throttle_generator(output_gen_ids, streaming_interval):
             if runtime_rank == 0:
-                print_output(output_ids, input_lengths, max_output_len,
-                             tokenizer, output_csv, output_npy)
+                print_output(
+                    output_ids,
+                    input_lengths,
+                    max_output_len,
+                    tokenizer,
+                    output_csv,
+                    output_npy,
+                )
     else:
         output_ids = output_gen_ids
         if runtime_rank == 0:
-            print_output(output_ids, input_lengths, max_output_len, tokenizer,
-                         output_csv, output_npy)
+            print_output(
+                output_ids,
+                input_lengths,
+                max_output_len,
+                tokenizer,
+                output_csv,
+                output_npy,
+            )

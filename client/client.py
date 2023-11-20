@@ -17,7 +17,6 @@ import client.utils as utils
 
 
 class UserData:
-
     def __init__(self):
         self._completed_requests = queue.Queue()
 
@@ -27,7 +26,7 @@ def callback(user_data, result, error):
         user_data._completed_requests.put(error)
     else:
         user_data._completed_requests.put(result)
-        output = result.as_numpy('text_output')
+        output = result.as_numpy("text_output")
         print(output[0], flush=True)
 
 
@@ -59,7 +58,7 @@ def test(triton_client, prompt):
     # Send request
     triton_client.async_stream_infer(model_name, inputs)
 
-    #Wait for server to close the stream
+    # Wait for server to close the stream
     triton_client.stop_stream()
     t2 = time.time()
 
@@ -79,25 +78,22 @@ def test(triton_client, prompt):
             print(x)
             print("Latency", t2 - t1)
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('-v',
-                        '--verbose',
-                        action="store_true",
-                        required=False,
-                        default=False,
-                        help='Enable verbose output')
-    parser.add_argument('-u',
-                        '--url',
-                        type=str,
-                        required=False,
-                        help='Inference server URL.')
 
-    parser.add_argument('-p',
-                        '--prompt',
-                        type=str,
-                        required=True,
-                        help='Input prompt.')
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        required=False,
+        default=False,
+        help="Enable verbose output",
+    )
+    parser.add_argument(
+        "-u", "--url", type=str, required=False, help="Inference server URL."
+    )
+
+    parser.add_argument("-p", "--prompt", type=str, required=True, help="Input prompt.")
     parser.add_argument(
         "-S",
         "--streaming",
@@ -108,21 +104,24 @@ if __name__ == '__main__':
     )
 
     parser.add_argument(
-        '-i',
-        '--protocol',
+        "-i",
+        "--protocol",
         type=str,
         required=False,
-        default='grpc',
-        choices=['grpc'],
-        help='Protocol ("http"/"grpc") used to ' +
-        'communicate with inference service. Default is "http".')
+        default="grpc",
+        choices=["grpc"],
+        help='Protocol ("http"/"grpc") used to '
+        + 'communicate with inference service. Default is "http".',
+    )
 
-    parser.add_argument('-o',
-                        '--output_len',
-                        type=int,
-                        default=100,
-                        required=False,
-                        help='Specify output length')
+    parser.add_argument(
+        "-o",
+        "--output_len",
+        type=int,
+        default=100,
+        required=False,
+        help="Specify output length",
+    )
 
     FLAGS = parser.parse_args()
     if FLAGS.url is None:

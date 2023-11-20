@@ -4,6 +4,7 @@ from locust import HttpUser, task
 # - Include inputs and expected outputs of varying lengths
 # - Maybe just run over some dataset to get a good variety of inputs
 
+
 class LLMUser(HttpUser):
     @task
     def generate(self):

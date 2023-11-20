@@ -14,7 +14,6 @@ from tritonclient.utils import np_to_triton_dtype
 
 
 class UserData:
-
     def __init__(self):
         self._completed_requests = queue.Queue()
         self._latencies = []
@@ -31,51 +30,50 @@ def completion_callback(user_data, result, error):
 
 def prepare_tensor(name, input, protocol):
     client_util = httpclient if protocol == "http" else grpcclient
-    t = client_util.InferInput(name, input.shape,
-                               np_to_triton_dtype(input.dtype))
+    t = client_util.InferInput(name, input.shape, np_to_triton_dtype(input.dtype))
     t.set_data_from_numpy(input)
     return t
 
 
 def prepare_inputs(input_start_ids, input_len, pad_id, end_id, flags):
-    output_len = np.ones([input_start_ids.shape[0], 1]).astype(
-        np.uint32) * flags.output_len
-    runtime_top_k = (flags.topk *
-                     np.ones([input_start_ids.shape[0], 1])).astype(np.uint32)
-    runtime_top_p = flags.topp * \
-        np.ones([input_start_ids.shape[0], 1]).astype(np.float32)
-    beam_search_diversity_rate = 0.0 * \
-        np.ones([input_start_ids.shape[0], 1]).astype(np.float32)
-    temperature = 1.0 * \
-        np.ones([input_start_ids.shape[0], 1]).astype(np.float32)
-    len_penalty = 1.0 * \
-        np.ones([input_start_ids.shape[0], 1]).astype(np.float32)
-    repetition_penalty = 1.0 * \
-        np.ones([input_start_ids.shape[0], 1]).astype(np.float32)
-    random_seed = 0 * \
-        np.ones([input_start_ids.shape[0], 1]).astype(np.uint64)
-    output_log_probs = True * \
-        np.ones([input_start_ids.shape[0], 1]).astype(bool)
-    beam_width = (flags.beam_width *
-                  np.ones([input_start_ids.shape[0], 1])).astype(np.uint32)
-    pad_ids = pad_id * \
-        np.ones([input_start_ids.shape[0], 1]).astype(np.uint32)
-    end_ids = end_id * \
-        np.ones([input_start_ids.shape[0], 1]).astype(np.uint32)
-    min_length = 1 * \
-        np.ones([input_start_ids.shape[0], 1]).astype(np.uint32)
-    presence_penalty = 0.0 * \
-        np.ones([input_start_ids.shape[0], 1]).astype(np.float32)
-    bad_words_list = np.concatenate([
-        np.zeros([input_start_ids.shape[0], 1, 1]).astype(np.int32),
-        (-1 * np.ones([input_start_ids.shape[0], 1, 1])).astype(np.int32)
-    ],
-                                    axis=1)
-    stop_word_list = np.concatenate([
-        np.zeros([input_start_ids.shape[0], 1, 1]).astype(np.int32),
-        (-1 * np.ones([input_start_ids.shape[0], 1, 1])).astype(np.int32)
-    ],
-                                    axis=1)
+    output_len = (
+        np.ones([input_start_ids.shape[0], 1]).astype(np.uint32) * flags.output_len
+    )
+    runtime_top_k = (flags.topk * np.ones([input_start_ids.shape[0], 1])).astype(
+        np.uint32
+    )
+    runtime_top_p = flags.topp * np.ones([input_start_ids.shape[0], 1]).astype(
+        np.float32
+    )
+    beam_search_diversity_rate = 0.0 * np.ones([input_start_ids.shape[0], 1]).astype(
+        np.float32
+    )
+    temperature = 1.0 * np.ones([input_start_ids.shape[0], 1]).astype(np.float32)
+    len_penalty = 1.0 * np.ones([input_start_ids.shape[0], 1]).astype(np.float32)
+    repetition_penalty = 1.0 * np.ones([input_start_ids.shape[0], 1]).astype(np.float32)
+    random_seed = 0 * np.ones([input_start_ids.shape[0], 1]).astype(np.uint64)
+    output_log_probs = True * np.ones([input_start_ids.shape[0], 1]).astype(bool)
+    beam_width = (flags.beam_width * np.ones([input_start_ids.shape[0], 1])).astype(
+        np.uint32
+    )
+    pad_ids = pad_id * np.ones([input_start_ids.shape[0], 1]).astype(np.uint32)
+    end_ids = end_id * np.ones([input_start_ids.shape[0], 1]).astype(np.uint32)
+    min_length = 1 * np.ones([input_start_ids.shape[0], 1]).astype(np.uint32)
+    presence_penalty = 0.0 * np.ones([input_start_ids.shape[0], 1]).astype(np.float32)
+    bad_words_list = np.concatenate(
+        [
+            np.zeros([input_start_ids.shape[0], 1, 1]).astype(np.int32),
+            (-1 * np.ones([input_start_ids.shape[0], 1, 1])).astype(np.int32),
+        ],
+        axis=1,
+    )
+    stop_word_list = np.concatenate(
+        [
+            np.zeros([input_start_ids.shape[0], 1, 1]).astype(np.int32),
+            (-1 * np.ones([input_start_ids.shape[0], 1, 1])).astype(np.int32),
+        ],
+        axis=1,
+    )
     inputs = [
         prepare_tensor("input_ids", input_start_ids, flags.protocol),
         prepare_tensor("input_lengths", input_len, flags.protocol),
@@ -87,8 +85,7 @@ def prepare_inputs(input_start_ids, input_len, pad_id, end_id, flags):
         prepare_tensor("runtime_top_k", runtime_top_k, flags.protocol),
         prepare_tensor("runtime_top_p", runtime_top_p, flags.protocol),
         prepare_tensor("len_penalty", len_penalty, flags.protocol),
-        prepare_tensor("repetition_penalty", repetition_penalty,
-                       flags.protocol),
+        prepare_tensor("repetition_penalty", repetition_penalty, flags.protocol),
         prepare_tensor("min_length", min_length, flags.protocol),
         prepare_tensor("presence_penalty", presence_penalty, flags.protocol),
         prepare_tensor("random_seed", random_seed, flags.protocol),
@@ -102,9 +99,9 @@ def prepare_inputs(input_start_ids, input_len, pad_id, end_id, flags):
 def create_inference_server_client(protocol, url, concurrency, verbose):
     client_util = httpclient if protocol == "http" else grpcclient
     if protocol == "http":
-        return client_util.InferenceServerClient(url,
-                                                 concurrency=concurrency,
-                                                 verbose=verbose)
+        return client_util.InferenceServerClient(
+            url, concurrency=concurrency, verbose=verbose
+        )
     elif protocol == "grpc":
         return client_util.InferenceServerClient(url, verbose=verbose)
 
@@ -117,8 +114,7 @@ def send_requests(model_name, inputs, client, request_parallelism):
     return results
 
 
-def send_requests_async(model_name, inputs, client, flags,
-                        request_parallelism):
+def send_requests_async(model_name, inputs, client, flags, request_parallelism):
     if flags.protocol == "http":
         async_requests = []
         for _ in range(request_parallelism):
@@ -127,8 +123,9 @@ def send_requests_async(model_name, inputs, client, flags,
     else:
         user_data = UserData()
         for _ in range(request_parallelism):
-            client.async_infer(model_name, inputs,
-                               partial(completion_callback, user_data))
+            client.async_infer(
+                model_name, inputs, partial(completion_callback, user_data)
+            )
         return user_data
 
 
@@ -151,11 +148,7 @@ def get_grpc_results(user_data, request_parallelism):
     return results
 
 
-def append_start_and_end_ids(inputs,
-                             batch_size,
-                             flags,
-                             start_id=None,
-                             end_id=None):
+def append_start_and_end_ids(inputs, batch_size, flags, start_id=None, end_id=None):
     if start_id is not None:
         start_ids = start_id * np.ones([batch_size, 1]).astype(np.uint32)
         inputs.append(prepare_tensor("start_id", start_ids, flags.protocol))
@@ -176,8 +169,9 @@ def get_inflight_reqs_profile(start_times, end_times, requests_per_sec):
 
     # need to have enough resolution intervals depending on avg. latency per request. 10 times smaller than request processing time
     sec_per_request = 1.0 / requests_per_sec
-    NUM_INTERVALS = int((max_end_time - min_start_time) /
-                        timedelta(seconds=(sec_per_request / 10)))
+    NUM_INTERVALS = int(
+        (max_end_time - min_start_time) / timedelta(seconds=(sec_per_request / 10))
+    )
     print(NUM_INTERVALS)
     # Calculate interval length
     interval_length = (max_end_time - min_start_time) / NUM_INTERVALS
@@ -203,21 +197,19 @@ def get_inflight_reqs_profile(start_times, end_times, requests_per_sec):
 
 
 def extract_print_stats(ip_token_len_list, responses, user_data, FLAGS):
-
     #### Gather info about requests
     op_token_len_list = []
     op_token_len_ooo = {}
 
     for response in responses:
-        #JG: long sequence to extract output length from response json dict. Responses are out of order
-        op_token_len_ooo[response.get_response(as_json=True)['id']] = \
-            int(response.get_response(as_json=True)['outputs'][0]['shape'][2])
+        # JG: long sequence to extract output length from response json dict. Responses are out of order
+        op_token_len_ooo[response.get_response(as_json=True)["id"]] = int(
+            response.get_response(as_json=True)["outputs"][0]["shape"][2]
+        )
 
-    op_token_len_list = [
-        value for key, value in sorted(op_token_len_ooo.items())
-    ]
+    op_token_len_list = [value for key, value in sorted(op_token_len_ooo.items())]
 
-    assert (len(op_token_len_list) == len(ip_token_len_list))
+    assert len(op_token_len_list) == len(ip_token_len_list)
     for i in range(len(op_token_len_list)):
         op_token_len_list[i] = op_token_len_list[i] - ip_token_len_list[i]
 
@@ -238,34 +230,35 @@ def extract_print_stats(ip_token_len_list, responses, user_data, FLAGS):
     index_90 = math.ceil(len(latency_sorted) * 0.90)
 
     data = {
-        'latency': latency_list_in_order,
-        'start_time': start_time_list_in_order,
-        'stop_time': stop_time_list_in_order,
-        'num_ip_tokens': ip_token_len_list,
-        'num_op_tokens': op_token_len_list
+        "latency": latency_list_in_order,
+        "start_time": start_time_list_in_order,
+        "stop_time": stop_time_list_in_order,
+        "num_ip_tokens": ip_token_len_list,
+        "num_op_tokens": op_token_len_list,
     }
 
     # Bundle everything in a single DF
     df = pd.DataFrame(data)
 
-    #stats
-    df['num_ip_tokens'].sum()
-    avg_ip_tokens = df['num_ip_tokens'].mean()
-    df['num_ip_tokens'].median()
-    df['num_ip_tokens'].std()
-    total_op_tokens = df['num_op_tokens'].sum()
-    avg_op_tokens = df['num_op_tokens'].mean()
-    df['num_op_tokens'].median()
-    df['num_op_tokens'].std()
+    # stats
+    df["num_ip_tokens"].sum()
+    avg_ip_tokens = df["num_ip_tokens"].mean()
+    df["num_ip_tokens"].median()
+    df["num_ip_tokens"].std()
+    total_op_tokens = df["num_op_tokens"].sum()
+    avg_op_tokens = df["num_op_tokens"].mean()
+    df["num_op_tokens"].median()
+    df["num_op_tokens"].std()
 
-    tend = max(df['stop_time'].tolist())
-    t0 = min(df['start_time'].tolist())
+    tend = max(df["stop_time"].tolist())
+    t0 = min(df["start_time"].tolist())
     total_latency = (tend - t0).total_seconds()
     requests_per_sec = len(responses) / total_latency
     tokens_generated_per_sec = total_op_tokens / total_latency
 
     in_flight_requests_intervals = get_inflight_reqs_profile(
-        df['start_time'].tolist(), df['stop_time'].tolist(), requests_per_sec)
+        df["start_time"].tolist(), df["stop_time"].tolist(), requests_per_sec
+    )
     avg_in_flight_requests = np.mean(in_flight_requests_intervals)
 
     print_data_dict = {}
@@ -280,17 +273,18 @@ def extract_print_stats(ip_token_len_list, responses, user_data, FLAGS):
     print_data_dict["Total latency (ms)"] = total_latency * 1000
     print_data_dict["Total requests"] = len(responses)
 
-    print_data = [["Requests/Sec", requests_per_sec],
-                  ["OP tokens/sec", tokens_generated_per_sec],
-                  ["Avg. latency (ms)",
-                   np.mean(latency_list_in_order)],
-                  ["P99 latency (ms)", latency_sorted[index_99 - 1]],
-                  ["P90 latency (ms)", latency_sorted[index_90 - 1]],
-                  ["Avg. IP tokens per request", avg_ip_tokens],
-                  ["Avg. OP tokens per request", avg_op_tokens],
-                  ["Avg. InFlight requests", avg_in_flight_requests],
-                  ["Total latency (ms)", total_latency * 1000],
-                  ["Total requests", len(responses)]]
+    print_data = [
+        ["Requests/Sec", requests_per_sec],
+        ["OP tokens/sec", tokens_generated_per_sec],
+        ["Avg. latency (ms)", np.mean(latency_list_in_order)],
+        ["P99 latency (ms)", latency_sorted[index_99 - 1]],
+        ["P90 latency (ms)", latency_sorted[index_90 - 1]],
+        ["Avg. IP tokens per request", avg_ip_tokens],
+        ["Avg. OP tokens per request", avg_op_tokens],
+        ["Avg. InFlight requests", avg_in_flight_requests],
+        ["Total latency (ms)", total_latency * 1000],
+        ["Total requests", len(responses)],
+    ]
 
     # Format numerical values to 2 decimal places
     formatted_data = [[item, f"{value:.2f}"] for item, value in print_data]
@@ -315,18 +309,19 @@ def extract_print_stats(ip_token_len_list, responses, user_data, FLAGS):
         json_dict = []
         for i in range(len(op_token_len_list)):
             req_dict = {}
-            req_dict['name'] = 'req_{}'.format(i)
+            req_dict["name"] = "req_{}".format(i)
             req_dict["cat"] = "batch"
             req_dict["ph"] = "X"
-            req_dict["ts"] = (start_time_list_in_order[i].timestamp() -
-                              t0.timestamp()) * 1000000  #perfetto expects us
+            req_dict["ts"] = (
+                start_time_list_in_order[i].timestamp() - t0.timestamp()
+            ) * 1000000  # perfetto expects us
             req_dict["dur"] = (
-                stop_time_list_in_order[i] -
-                start_time_list_in_order[i]).total_seconds() * 1000000
+                stop_time_list_in_order[i] - start_time_list_in_order[i]
+            ).total_seconds() * 1000000
             req_dict["pid"] = "1"
             req_dict["args"] = {
                 "isl": int(ip_token_len_list[i]),
-                "osl": int(op_token_len_list[i])
+                "osl": int(op_token_len_list[i]),
             }
             json_dict.append(req_dict)
 
