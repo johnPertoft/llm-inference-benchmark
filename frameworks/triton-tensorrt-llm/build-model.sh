@@ -19,7 +19,7 @@ mkdir -p models
 docker run -it --rm \
     --ipc host \
     --gpus all \
-    --shm-size=2g \
+    --shm-size=20g \
     --user $(id -u):$(id -g) \
     --ulimit memlock=-1 \
     --ulimit stack=67108864 \

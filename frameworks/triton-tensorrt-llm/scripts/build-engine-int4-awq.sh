@@ -10,6 +10,7 @@ TRT_ENGINE_PATH="$2"
 shift 2
 
 # TODO: Need to install ammo toolkit first.
+# See https://github.com/NVIDIA/TensorRT-LLM/blob/release/0.5.0/examples/quantization/README.md#installation
 
 quantized_path=$(mktemp -d)
 python tensorrtllm_backend/tensorrt_llm/examples/llama/quantize.py \
