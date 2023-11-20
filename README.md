@@ -47,6 +47,7 @@ TODO
 - [ ] Compare prebuilt image vs building our own (at least by building our own we can reduce build time)
 - [ ] Change the tokenizer to not include special tokens maybe? (Need to change the tokenizer triton model)
 - [ ] There's some warnings when running the build model script about skipping stuff. Fix.
+- [ ] Are we / can we use CudaGraph?
 
 ### Triton + vllm
 - [ ] Try with and without inflight batching?
