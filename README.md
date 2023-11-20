@@ -12,6 +12,7 @@ TODO
 ### Misc
 - [ ] Proper instructions
 - [ ] Remove devcontainer config, not needed and just adds complexity
+- [ ] Compare with paid solutions?
 - [ ] Do both http and grpc calls?
 - [ ] Validate outputs too, run over some datasets and compute metrics?
 - [ ] All services should accept batches?
@@ -32,6 +33,7 @@ TODO
 ### Fastapi + TensorrtLLM
 - [ ] TODO
 - [ ] Quantization options?
+- [ ] Share build scripts for TensorrtLLM with triton setup
 
 ### Fastapi + vllm
 - [ ] Support batch inputs?
@@ -44,6 +46,7 @@ TODO
 - [ ] Improve build model/engine script to be more automatic. Write the config.pbtxt files too.
 - [ ] Compare prebuilt image vs building our own (at least by building our own we can reduce build time)
 - [ ] Change the tokenizer to not include special tokens maybe? (Need to change the tokenizer triton model)
+- [ ] There's some warnings when running the build model script about skipping stuff. Fix.
 
 ### Triton + vllm
 - [ ] Try with and without inflight batching?

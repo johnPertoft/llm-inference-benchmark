@@ -34,17 +34,6 @@ python tensorrtllm_backend/tools/fill_template.py --in_place ${PREPROCESSING_MOD
 python tensorrtllm_backend/tools/fill_template.py --in_place ${POSTPROCESSING_MODEL_PATH}/config.pbtxt \
     tokenizer_type:llama,tokenizer_dir:${HF_MODEL_PATH}
 
-# TODO: Some more config settings to try:
-# python3 tools/fill_template.py --in_place \
-#       all_models/inflight_batcher_llm/tensorrt_llm/config.pbtxt \
-#       decoupled_mode:true,engine_dir:/all_models/inflight_batcher_llm/tensorrt_llm/1,\
-# max_tokens_in_paged_kv_cache:,batch_scheduler_policy:guaranteed_completion,kv_cache_free_gpu_mem_fraction:0.2,\
-# max_num_sequences:4
-
-# TODO: Sometimes this is used too but doesn't seem needed?
-# Convert weights from HF Tranformers to FT format
-#python3 hf_gpt_convert.py -p 8 -i gpt2 -o ./c-model/gpt2 --tensor-parallelism 4 --storage-type float16
-
 # Build TensorRT engine with the passed along arguments.
 python tensorrtllm_backend/tensorrt_llm/examples/llama/build.py \
     --model_dir ${HF_MODEL_PATH} \

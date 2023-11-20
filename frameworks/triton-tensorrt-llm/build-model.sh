@@ -5,30 +5,28 @@ set -e
 # The actual logic for this is inside build-trt-model.sh which is intended to run
 # inside the container.
 
-# TODO:
-# - Take arguments to pass in?
-# - Remove docker run arguments that are not needed.
-# - Rename build-trt-model.sh to build-triton-trt-model.sh?
+if [ "$#" -lt 2 ]; then
+    echo "Usage: $0 <HF_MODEL_PATH> <TRITON_OUTPUT_PATH> [additional arguments passed along...]"
+    exit 1
+fi
+HF_MODEL_PATH="$1"
+TRITON_OUTPUT_PATH="$2"
+shift 2
 
 cd "$(dirname $0)"
 mkdir -p models
 docker run -it --rm \
     --ipc host \
     --gpus all \
+    --shm-size=2g \
     --user $(id -u):$(id -g) \
     --ulimit memlock=-1 \
     --ulimit stack=67108864 \
     --volume ${PWD}/../../hf-models:/hf-models \
     --volume ${PWD}/models:/models \
-    --volume ${PWD}/build-trt-model.sh:/opt/tritonserver/build-trt-model.sh \
+    --volume ${PWD}/build-triton-trt-model.sh:/opt/tritonserver/build-triton-trt-model.sh \
     triton-tensorrt-llm-server \
-    ./build-trt-model.sh \
-    "/hf-models/llama-2-7b-chat-hf" \
-    "/models/llama-2-7b-chat/1-gpu/fp16" \
-    --dtype float16 \
-    --remove_input_padding \
-    --use_gpt_attention_plugin float16 \
-    --enable_context_fmha \
-    --use_gemm_plugin float16 \
-    --paged_kv_cache \
-    --use_inflight_batching
+    ./build-triton-trt-model.sh \
+    "${HF_MODEL_PATH}" \
+    "${TRITON_OUTPUT_PATH}" \
+    "$@"
