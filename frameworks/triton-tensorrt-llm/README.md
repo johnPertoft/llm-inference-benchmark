@@ -6,16 +6,13 @@
 ```
 
 ## 2. Build a Triton Inference Server model with a TensorRT-LLM engine
+Note that paths are inside the container.
 ```bash
-./build-image.sh
+./build-model.sh <HF_MODEL_PATH> <TRITON_OUTPUT_PATH> [additional arguments passed along...]
 ```
 
 ## 3. Run Triton Inference Server
+Note that paths are inside the container.
 ```bash
-./run.sh
-```
-
-## 4. Stop server
-```bash
-./stop.sh
+./run.sh <TRITON_MODEL_PATH>
 ```

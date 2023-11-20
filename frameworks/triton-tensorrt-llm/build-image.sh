@@ -2,4 +2,8 @@
 set -e
 
 cd "$(dirname $0)"
-docker build -t triton-tensorrt-llm-server .
+docker build \
+    --build-arg="USER_UID=$(id -u)" \
+    --build-arg="USER_GID=$(id -g)" \
+    -t triton-tensorrt-llm-server \
+    .

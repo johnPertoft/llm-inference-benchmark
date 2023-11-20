@@ -5,23 +5,15 @@ RUN git clone https://github.com/triton-inference-server/tensorrtllm_backend.git
     && cd tensorrtllm_backend \
     && sed -i "s/git@github.com:NVIDIA\/TensorRT-LLM.git/https:\/\/github.com\/NVIDIA\/TensorRT-LLM.git/g" .gitmodules \
     && git submodule update --init --recursive
-RUN pip install sentencepiece protobuf
+RUN pip install sentencepiece protobuf datasets
 RUN pip install git+https://github.com/NVIDIA/TensorRT-LLM.git \
     && mkdir /usr/local/lib/python3.10/dist-packages/tensorrt_llm/libs/ \
     && cp /opt/tritonserver/backends/tensorrtllm/* /usr/local/lib/python3.10/dist-packages/tensorrt_llm/libs/
-
-# TODO: Probably need this too.
-# TensorRT-LLM is required for generating engines. You can skip this step if
-# you already have the package installed. If you are generating engines within
-# the Triton container, you have to install the TRT-LLM package.
-# pip install git+https://github.com/NVIDIA/TensorRT-LLM.git
-# mkdir /usr/local/lib/python3.10/dist-packages/tensorrt_llm/libs/
-# cp /opt/tritonserver/backends/tensorrtllm/* /usr/local/lib/python3.10/dist-packages/tensorrt_llm/libs/
-
-#RUN git clone
-# TODO: Add the stuff needed to build models, maybe as a multistage or something
-# TODO: Is there like a dev image for this?
-#ADD https://raw.githubusercontent.com/triton-inference-server/tensorrtllm_backend/release/0.5.0/scripts/launch_triton_server.py launch_triton_server.py
-#ADD https://raw.githubusercontent.com/triton-inference-server/tensorrtllm_backend/release/0.5.0/tools/fill_template.py fill_template.py
-
-# TODO: Add entrypoint to start everything? Or add in in run.sh? Since we need to use it to build too.
+ARG USERNAME=user
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
+RUN groupmod --gid $USER_GID $USERNAME \
+    && usermod --uid $USER_UID --gid $USER_GID $USERNAME \
+    && chown -R $USER_UID:$USER_GID /home/$USERNAME
