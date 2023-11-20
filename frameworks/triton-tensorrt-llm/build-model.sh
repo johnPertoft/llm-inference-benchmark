@@ -12,6 +12,8 @@ TRITON_OUTPUT_PATH="$2"
 TRT_ENGINE_SCRIPT_PATH="$3"
 shift 3
 
+# TODO: Maybe mount a hf cache directory.
+
 cd "$(dirname $0)"
 mkdir -p models
 docker run -it --rm \

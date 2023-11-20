@@ -9,22 +9,24 @@ HF_MODEL_PATH="$1"
 TRT_ENGINE_PATH="$2"
 shift 2
 
-# TODO: First need to run this
-# python3 hf_llama_convert.py -i /llama-models/llama-7b-hf -o /llama/smooth_llama_7B/int8_kv_cache/ --calibrate-kv-cache -t fp16
+# TODO: This uses cnn/dailymail for calibrating. Should probably be relevant to model (use).
+# TODO: Doesn't seem configurable at the moment. Maybe fix.
+ft_dir=$(mktemp -d)
+python tensorrtllm_backend/tensorrt_llm/examples/llama/hf_llama_convert.py \
+    --in-file ${HF_MODEL_PATH} \
+    --out-dir ${ft_dir} \
+    --calibrate-kv-cache \
+    --storage-type fp16
 
-# TODO: Need to install datasets in the container
-# TODO: Probably should use a relevant dataset too for this? It's using cnn-dailymail atm
-
-# TODO: Then this
-# TODO: Note that we're now passing --ft_model_dir instead instead of --model_dir
-# python build.py --ft_model_dir=/llama/smooth_llama_7B/int8_kv_cache/1-gpu/ \
-#                 --dtype float16 \
-#                 --use_gpt_attention_plugin float16 \
-#                 --use_gemm_plugin float16 \
-#                 --output_dir ./tmp/llama/7B/trt_engines/int8_kv_cache_weight_only/1-gpu \
-#                 --int8_kv_cache \
-#                 --use_weight_only
-
-# python tensorrtllm_backend/tensorrt_llm/examples/llama/hf_llama_convert.py -i /hf-models/llama-2-7b-chat-hf/ -o /tmp/smooth-llama/int8-kv-cache --calibrate-kv-cache -t fp16
-
-#python tensorrtllm_backend/tensorrt_llm/examples/llama/quantize.py --model_dir ./tmp/llama/70B --dtype float16 --qformat fp8 --export_path /tmp/llama-quantized-fp8 --calib_size 512
+python tensorrtllm_backend/tensorrt_llm/examples/llama/build.py \
+    --ft_model_dir=${ft_dir} \
+    --output_dir ${TRT_ENGINE_PATH} \
+    --dtype float16 \
+    --remove_input_padding \
+    --use_gpt_attention_plugin float16 \
+    --enable_context_fmha \
+    --use_gemm_plugin float16 \
+    --paged_kv_cache \
+    --use_inflight_batching \
+    --use_weight_only \
+    --int8_kv_cache
