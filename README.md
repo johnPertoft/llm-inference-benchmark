@@ -29,6 +29,7 @@ TODO
 - [ ] Do we need to configure this somewhere?
 - [ ] How to increase gpu utilization? Even with a lot of concurrent users it doesn't go to 100%
       Bad configuration?
+- [ ] Any other serving frontends available? Use something faster than fastapi or no point?
 
 ### Fastapi + TensorrtLLM
 - [ ] TODO
