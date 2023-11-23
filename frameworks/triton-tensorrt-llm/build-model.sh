@@ -26,7 +26,6 @@ docker run -it --rm \
     --volume ${PWD}/../../hf-models:/hf-models \
     --volume ${PWD}/models:/models \
     --volume ${PWD}/scripts:/scripts \
-    --volume ${PWD}/build-triton-trt-model.sh:/opt/tritonserver/build-triton-trt-model.sh \
     triton-tensorrt-llm-server \
     /scripts/build-triton-model.sh \
     ${HF_MODEL_PATH} \

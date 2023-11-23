@@ -30,8 +30,12 @@ TODO
 - [ ] How to increase gpu utilization? Even with a lot of concurrent users it doesn't go to 100%
       Bad configuration?
 - [ ] Any other serving frontends available? Use something faster than fastapi or no point?
-- [ ] TorchServe? https://hamel.dev/notes/serving/torchserve/hf.html
-- [ ] Modal to host?
+
+### Frontends
+- [ ] TorchServe https://hamel.dev/notes/serving/torchserve/hf.html
+- [ ] RayServe
+- [ ] FastApi maybe doesn't make so much sense unless the batching is implemented in the backend solution
+  - For fastapi + vllm, is it better to just run the vllm server entrypoint?
 
 ### Fastapi + TensorrtLLM
 - [ ] TODO
