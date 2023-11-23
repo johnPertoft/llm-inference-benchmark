@@ -8,6 +8,8 @@ if [ "$#" -lt 1 ]; then
 fi
 TRITON_TRT_MODEL="$1"
 
+# TODO: Build the engine if it doesn't exist.
+
 cd "$(dirname $0)"
 docker run --rm -it \
     --gpus all \
