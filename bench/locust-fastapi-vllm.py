@@ -1,7 +1,5 @@
 from locust import HttpUser, task
 
-# TODO: Delete this specific file?
-
 
 class LLMUser(HttpUser):
     @task

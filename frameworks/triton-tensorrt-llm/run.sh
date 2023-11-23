@@ -9,6 +9,7 @@ fi
 TRITON_TRT_MODEL="$1"
 
 # TODO: Build the engine if it doesn't exist.
+# TODO: Maybe just take the local path and mount that instead.
 
 cd "$(dirname $0)"
 docker run --rm -it \

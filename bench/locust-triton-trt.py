@@ -1,7 +1,5 @@
 from locust import HttpUser, task
 
-# TODO: Delete this specific file?
-
 
 class LLMUser(HttpUser):
     @task
@@ -14,4 +12,4 @@ class LLMUser(HttpUser):
                 "stop_words": [""],  # TODO: Can we set "</s>" here or something?
             },
         }
-        self.client.post("/v2/models/ensemble/generate", json=data)
+        self.client.post("/generate", json=data)
