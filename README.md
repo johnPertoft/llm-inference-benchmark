@@ -30,6 +30,8 @@ TODO
 - [ ] How to increase gpu utilization? Even with a lot of concurrent users it doesn't go to 100%
       Bad configuration?
 - [ ] Any other serving frontends available? Use something faster than fastapi or no point?
+- [ ] Change all run scripts to also build image + model if necessary?
+- [ ] TODO: Check https://github.com/mistralai/mistral-src/blob/main/deploy/Dockerfile
 
 ### Frontends
 - [ ] TorchServe https://hamel.dev/notes/serving/torchserve/hf.html
