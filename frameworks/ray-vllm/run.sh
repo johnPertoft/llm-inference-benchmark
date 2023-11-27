@@ -27,4 +27,4 @@ docker run -it --rm \
     --volume ${PWD}/model-config.yaml:/model-config.yaml \
     --volume ${PWD}/../../hf-models:/hf-models \
     anyscale/ray-llm \
-    bash
+    serve run /serve-config.yaml
