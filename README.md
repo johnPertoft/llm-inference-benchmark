@@ -1,5 +1,5 @@
 # LLM Inference Benchmark
-Comparing inference frameworks for LLMs
+Comparing inference frameworks for LLMs for my usecase.
 
 ## Delimitations
 Initially focusing on comparing performance for a 7B Llama2 model on a single a100 40gb.
