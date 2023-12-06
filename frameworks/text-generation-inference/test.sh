@@ -5,6 +5,6 @@ curl -X POST -H 'Content-Type: application/json' http://localhost:8000/generate 
 '{
     "inputs": "[INST] How do I count to thirty in German? [/INST]",
     "parameters": {
-        "max_new_tokens": 128
+        "max_new_tokens": 111
     }
 }' | jq .generated_text

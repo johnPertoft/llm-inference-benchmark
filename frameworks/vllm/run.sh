@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
-cd "$(dirname $0)"
+if [ "$#" -lt 1 ]; then
+    echo "Usage: $0 <HF_MODEL_PATH> [additional arg to pass along]"
+    exit 1
+fi
+HF_MODEL_PATH="$1"
+shift 1
 
+cd "$(dirname $0)"
 docker run -it --rm \
     --gpus all \
     --ipc host \
@@ -12,5 +18,5 @@ docker run -it --rm \
     vllm-server \
     --host 0.0.0.0 \
     --port 8000 \
-    --model /hf-models/llama-2-7b-chat-hf \
-    --dtype float16
+    --model "${HF_MODEL_PATH}" \
+    "$@"
