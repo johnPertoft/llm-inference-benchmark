@@ -14,5 +14,6 @@ locust --headless \
     --users 10 \
     --spawn-rate 10 \
     --run-time 3m \
+    --stop-timeout 10 \
     --host "${HOST}" \
     "${LOCUST_USER_CLASS}"
