@@ -22,7 +22,8 @@ that framework with different model dtype settings.
 - [ ] Validate outputs too, run over some datasets and compute metrics?
 - [ ] All services should accept batches?
 - [ ] Use proper prompting format for models
-- [ ] Code from tensorrt-llm wants to load llamatokenizer in legacy mode. Consequences?
+- [ ] Code from tensorrt-llm wants to load llamatokenizer in legacy mode. Consequences for other frameworks?
+      See if it's still a problem
 - [ ] Pin all versions
 - [ ] Where does FasterTransformers position itself here really?
 - [ ] Need to make sure we generate the same number of tokens for proper comparison

@@ -8,6 +8,7 @@ fi
 HF_MODEL_PATH="$1"
 shift 1
 
+# TODO: Should tune the max batch tokens size here
 cd "$(dirname $0)"
 docker run -it --rm \
     --gpus all \

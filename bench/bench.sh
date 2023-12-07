@@ -11,8 +11,8 @@ shift 2
 
 locust --headless \
     --locustfile "$(dirname $0)/locust.py" \
-    --users 10 \
-    --spawn-rate 10 \
+    --users 20 \
+    --spawn-rate 20 \
     --run-time 3m \
     --stop-timeout 10 \
     --host "${HOST}" \
