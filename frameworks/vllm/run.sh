@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ "$#" -lt 1 ]; then
-    echo "Usage: $0 <HF_MODEL_PATH> [additional arg to pass along]"
+    echo "Usage: $0 <HF_MODEL_PATH> [additional args to pass along]"
     exit 1
 fi
 HF_MODEL_PATH="$1"
