@@ -13,6 +13,7 @@ tokenizer = AutoTokenizer.from_pretrained("hf-models/llama-2-7b-chat-hf")
 
 
 def check_tgi():
+    # TODO: There's an option to return the full text I think
     data = {
         "inputs": "[INST] How do I count to thirty in German? [/INST]",
         "parameters": {
@@ -38,6 +39,10 @@ def check_triton_trt():
 
 
 def check_triton_vllm():
+    pass
+
+
+def check_vllm():
     pass
 
 

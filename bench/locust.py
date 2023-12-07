@@ -1,12 +1,19 @@
+from datasets import load_dataset
 from locust import HttpUser
 from locust import task
 from transformers import AutoTokenizer
 
 # TODO:
-# - Common (forced) output length
 # - Use a dataset with varying input/output lengths.
 #   - Order should be fixed
 #   - How to share it between the processes?
+#   - max tokens need to be based on the number of input tokens if that varies
+#   - unless all frameworks support the max_new_tokens argument somehow.
+# tokenizer = AutoTokenizer.from_pretrained("../hf-models/llama-2-7b-chat-hf")
+# ds = load_dataset("cnn_dailymail", "3.0.0", split="validation")
+# ds = ds.select(range(100))
+# ds = ds.map(lambda x: {"article": tokenizer.apply_chat_template([{"role": "user", "content": f"Summarize: {x['article']}"}], tokenize=False)})
+# ds = ds.remove_columns(["highlights", "id"])
 
 
 class BaseUser(HttpUser):
