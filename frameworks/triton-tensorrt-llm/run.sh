@@ -12,6 +12,7 @@ TRITON_TRT_MODEL="$1"
 # TODO: Maybe just take the local path and mount that instead.
 
 cd "$(dirname $0)"
+./build-image.sh
 docker run --rm -it \
     --gpus all \
     --shm-size=2g \

@@ -8,6 +8,7 @@ HF_MODEL_PATH="$1"
 shift 1
 
 cd "$(dirname $0)"
+./build-image.sh
 docker run -it --rm \
     --gpus all \
     --ipc host \
