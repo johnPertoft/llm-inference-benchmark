@@ -5,16 +5,20 @@ Comparing inference frameworks for LLMs for my usecase at work.
 Initially just focusing on comparing performance for a 7B Llama2 model on a single a100 40gb.
 
 ## Usage
+
+### Setup
+TODO
+
+### Run LLM inference framework
 Every framework folder has at least one run script without arguments that will run a container with
 that framework with different model dtype settings.
 
 ## TODO
 
 ### Misc
+- [ ] Run benchmark code etc in another container?
 - [ ] Proper instructions
-- [ ] Remove devcontainer config, not needed and just adds complexity
 - [ ] Compare with paid solutions?
-- [ ] Do both http and grpc calls?
 - [ ] Validate outputs too, run over some datasets and compute metrics?
 - [ ] All services should accept batches?
 - [ ] Use proper prompting format for models
