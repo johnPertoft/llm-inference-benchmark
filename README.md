@@ -2,10 +2,11 @@
 Comparing inference frameworks for LLMs for my usecase at work.
 
 ## Delimitations
-Initially focusing on comparing performance for a 7B Llama2 model on a single a100 40gb.
+Initially just focusing on comparing performance for a 7B Llama2 model on a single a100 40gb.
 
 ## Usage
-TODO
+Every framework folder has at least one run script without arguments that will run a container with
+that framework with different model dtype settings.
 
 ## TODO
 
