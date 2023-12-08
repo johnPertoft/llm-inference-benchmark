@@ -17,46 +17,32 @@ that framework with different model dtype settings.
 
 ### Misc
 - [ ] Run benchmark code etc in another container?
-- [ ] Proper instructions
 - [ ] Compare with paid solutions?
 - [ ] Validate outputs too, run over some datasets and compute metrics?
 - [ ] All services should accept batches?
-- [ ] Use proper prompting format for models
 - [ ] Code from tensorrt-llm wants to load llamatokenizer in legacy mode. Consequences for other frameworks?
       See if it's still a problem
 - [ ] Pin all versions
 - [ ] Where does FasterTransformers position itself here really?
 - [ ] Need to make sure we generate the same number of tokens for proper comparison
-- [ ] Check options for available metrics etc
 - [ ] Compare with llama.cpp etc too
 - [ ] Enable input params to control generation for all setups
 - [ ] Can we get some metrics for how full the batches are?
 - [ ] And to what extent / whether continuous batching is used
-- [ ] Do we need to configure this somewhere?
 - [ ] How to increase gpu utilization? Even with a lot of concurrent users it doesn't go to 100%
       Bad configuration?
 - [ ] Any other serving frontends available? Use something faster than fastapi or no point?
-- [ ] Change all run scripts to also build image + model if necessary?
 - [ ] TODO: Check https://github.com/mistralai/mistral-src/blob/main/deploy/Dockerfile
+- [ ] TorchServe https://hamel.dev/notes/serving/torchserve/hf.html
 
 ### Frontends
-- [ ] TorchServe https://hamel.dev/notes/serving/torchserve/hf.html
 - [ ] RayServe
 - [ ] FastApi maybe doesn't make so much sense unless the batching is implemented in the backend solution
-  - For fastapi + vllm, is it better to just run the vllm server entrypoint?
-
-### Fastapi + TensorrtLLM
-- [ ] TODO
-- [ ] Quantization options?
-- [ ] Share build scripts for TensorrtLLM with triton setup
-
-### Fastapi + vllm
-- [ ] Support batch inputs?
-- [ ] Quantization options?
-- [ ] Start the vllm server separately and send requests to it instead of using AsyncEngine? Any difference?
+  - For fastapi + vllm, is it better to just run the vllm server entrypoint? Just delete the fastapi+vllm one.
 
 ### Triton + TensorrtLLM
-- [ ] Try with and without inflight batching?
+- [ ] Initial results with this setup are worse than others, user error?
+- [ ] Try with and without inflight/continuous batching?
 - [ ] Try different quantization configs
 - [ ] Improve build model/engine script to be more automatic. Write the config.pbtxt files too.
 - [ ] Compare prebuilt image vs building our own (at least by building our own we can reduce build time)
@@ -73,4 +59,4 @@ that framework with different model dtype settings.
 ### Text Generation Inference
 - [x] Don't even have to build the image ourselves :sunglasses:
 - [ ] Try quantization options
-- [ ] Continuous/in-flight batching
+- [x] Continuous/in-flight batching. On by default I think?
