@@ -20,8 +20,7 @@ that framework with different model dtype settings.
 - [ ] Compare with paid solutions?
 - [ ] Validate outputs too, run over some datasets and compute metrics?
 - [ ] Better benchmark with varying input/output lengths
-- [ ] Code from tensorrt-llm wants to load llamatokenizer in legacy mode. Consequences for other frameworks?
-      See if it's still a problem
+- [ ] Code from tensorrt-llm wants to load llamatokenizer in legacy mode. Consequences for other frameworks? See if it's still a problem
 - [ ] Pin all versions
 - [ ] Where does FasterTransformers position itself here really?
 - [ ] Need to make sure we generate the same number of tokens for proper comparison
@@ -29,9 +28,7 @@ that framework with different model dtype settings.
 - [ ] Enable input params to control generation for all setups
 - [ ] Can we get some metrics for how full the batches are?
 - [ ] And to what extent / whether continuous batching is used
-- [ ] How to increase gpu utilization? Even with a lot of concurrent users it doesn't go to 100%
-      Bad configuration?
-- [ ] Any other serving frontends available? Use something faster than fastapi or no point?
+- [ ] How to increase gpu utilization? Even with a lot of concurrent users it doesn't go to 100% Bad configuration?
 - [ ] TODO: Check https://github.com/mistralai/mistral-src/blob/main/deploy/Dockerfile
 - [ ] TorchServe https://hamel.dev/notes/serving/torchserve/hf.html
 
