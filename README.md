@@ -19,7 +19,7 @@ that framework with different model dtype settings.
 - [ ] Run benchmark code etc in another container?
 - [ ] Compare with paid solutions?
 - [ ] Validate outputs too, run over some datasets and compute metrics?
-- [ ] All services should accept batches?
+- [ ] Better benchmark with varying input/output lengths
 - [ ] Code from tensorrt-llm wants to load llamatokenizer in legacy mode. Consequences for other frameworks?
       See if it's still a problem
 - [ ] Pin all versions
